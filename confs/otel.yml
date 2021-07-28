@@ -1,0 +1,36 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+exporters:
+  jaeger:
+    endpoint: jaeger:14250
+    insecure: true
+
+  # Adapted from:
+  #   https://www.elastic.co/guide/en/apm/get-started/current/open-telemetry-elastic.html
+  otlp/elastic:
+    endpoint: apm:8200
+    insecure: true
+
+  prometheus:
+    # Endpoint where prometheus will scrape data
+    # You must configure the correct collector endpoint
+    # on prometheus' configurations
+    endpoint: 0.0.0.0:9090
+
+processors:
+  batch:
+
+service:
+  pipelines:
+    traces:
+      receivers: [ otlp ]
+      processors: [ batch ]
+      exporters: [ otlp/elastic, jaeger ]
+    metrics:
+      receivers: [ otlp ]
+      processors: [ batch ]
+      exporters: [ otlp/elastic, prometheus ]
