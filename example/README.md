@@ -1,8 +1,8 @@
-# Sample app
+# Sample application
 
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-Sample app to generate traces/metrics for [OpenTelemetry][1]
+Sample application to generate traces/metrics for [OpenTelemetry][1]
 
 ## Table of Contents
 
@@ -14,8 +14,8 @@ Sample app to generate traces/metrics for [OpenTelemetry][1]
 
 This app contains only two endpoints:
 
-- `/nice`
-- `/hello`
+- `/nice`, returns `nice`
+- `/hello`, returns `hello`
 
 They don't do much as they were created for demonstration purposes.
 
@@ -31,12 +31,17 @@ $ npm install
 
 To start the app just execute:
 
-```
+```sh
 $ npm start
+# or
+$ node --require './tracing.js' app.js
 ```
 
-The app will be available on [localhost:8080](localhost:8080). If you want to
-generate some bogus traffic, execute:
+You should use the `--require` flag as it will load the tracing part before
+anything else. This is good because the libraries should start before the
+application that is being monitored. The app will be available on
+[localhost:8080](localhost:8080). If you want to generate some bogus traffic,
+execute:
 
 ```
 $ npm run traffic
