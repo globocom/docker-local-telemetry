@@ -56,4 +56,8 @@ And the following shows a single trace on Jaeger:
 
 ![jaeger](../imgs/jaeger.png)
 
+And the following shows a _counter_ metric in Prometheu:
+
+![prometheus](../imgs/prometheus.png)
+
 [1]: https://opentelemetry.io/
