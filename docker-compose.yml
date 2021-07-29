@@ -1,24 +1,35 @@
 version: '3'
 
 services:
+  # Adapted from:
+  #   https://www.elastic.co/guide/en/apm/get-started/current/quick-start-overview.html
   elastic:
     image: elasticsearch:7.13.4
+    ports:
+      - 9200:9200
+      - 9300:9300
     environment:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
 
+  # Adapted from:
+  #   https://www.elastic.co/guide/en/apm/get-started/current/quick-start-overview.html
   kibana:
     image: kibana:7.13.4
     ports:
-      - 5601:5601  # web ui
+      - 5601:5601
     environment:
       - ELASTICSEARCH_URL=http://elastic:9200
       - ELASTICSEARCH_HOSTS=http://elastic:9200
     depends_on:
       - elastic
 
+  # Adapted from:
+  #   https://www.elastic.co/guide/en/apm/get-started/current/quick-start-overview.html
   apm:
     image: elastic/apm-server:7.13.4
+    ports:
+      - 8200:8200
     command: >
       apm-server -e
         -E apm-server.rum.enabled=true
@@ -31,15 +42,27 @@ services:
       - elastic
       - kibana
 
+  # Adapted from:
+  #   https://www.jaegertracing.io/docs/1.24/getting-started/#all-in-one
   jaeger:
     image: jaegertracing/all-in-one
+    environment:
+      - COLLECTOR_ZIPKIN_HOST_PORT=:9411
     ports:
-      - 16686:16686  # web UI
+      - 5775:5775/udp
+      - 6831:6831/udp
+      - 6832:6832/udp
+      - 5778:5778
+      - 16686:16686
+      - 14268:14268
+      - 9411:9411
 
+  # Adapted from:
+  #   https://prometheus.io/docs/prometheus/latest/installation/#using-docker
   prometheus:
-    image: ubuntu/prometheus
+    image: prom/prometheus
     ports:
-      - 9090:9090  # web UI
+      - 9090:9090
     volumes:
       - ./confs/prometheus.yml:/etc/prometheus/prometheus.yml:ro
 
@@ -48,8 +71,4 @@ services:
     volumes:
       - ./confs/otel.yml:/etc/otel/config.yaml:ro
     ports:
-      - 55680:55680  # legacy gRPC receiver
-      - 4317:4317    # gRPC receiver
-    depends_on:
-      - apm
-      - jaeger
+      - 4317:4317  # OTLP gRPC receiver
