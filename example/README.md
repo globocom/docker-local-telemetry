@@ -48,13 +48,11 @@ $ npm run traffic
 ```
 
 It will perform requests on a loop to generate some data to bee seen on the
-dashboards. The image below shows the APM dashboard view on Kibana
-([localhost:5601](localhost:5601)).
+dashboards. The image below shows the APM dashboard view on Kibana.
 
 ![apm](../imgs/apm.png)
 
-And the following shows a single trace on Jaeger
-[[localhost:16686](localhost:16686)]:
+And the following shows a single trace on Jaeger:
 
 ![jaeger](../imgs/jaeger.png)
 
