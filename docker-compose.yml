@@ -66,9 +66,12 @@ services:
     volumes:
       - ./confs/prometheus.yml:/etc/prometheus/prometheus.yml:ro
 
+  # Adapted from:
+  #   https://opentelemetry.io/docs/collector/getting-started/#docker
+  #   https://github.com/open-telemetry/opentelemetry-collector/blob/main/examples/demo/docker-compose.yaml
   otel:
     image: otel/opentelemetry-collector-contrib:latest
     volumes:
       - ./confs/otel.yml:/etc/otel/config.yaml:ro
     ports:
-      - 4317:4317  # OTLP gRPC receiver
+      - 4317:4317  # gRPC
