@@ -1,6 +1,9 @@
 const express = require('express')
 
+const metrics = require('./metrics')
+
 const app = express()
+app.use(metrics.counter)
 
 app.get('/nice', (req, res) => {
   res.send('nice')
