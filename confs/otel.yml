@@ -17,8 +17,8 @@ exporters:
 
   prometheus:
     # Endpoint where prometheus will scrape data
-    # You must configure the correct collector endpoint
-    # on prometheus' configurations
+    # You must configure the correct collector
+    # endpoint on prometheus' configurations
     endpoint: 0.0.0.0:9090
 
 processors:
