@@ -1,3 +1,6 @@
+# Adapted from:
+#   https://github.com/open-telemetry/opentelemetry-collector/blob/main/examples/demo/otel-collector-config.yaml
+
 receivers:
   otlp:
     protocols:
@@ -8,6 +11,8 @@ exporters:
   jaeger:
     endpoint: jaeger:14250
     insecure: true
+
+  logging:
 
   # Adapted from:
   #   https://www.elastic.co/guide/en/apm/get-started/current/open-telemetry-elastic.html
@@ -29,8 +34,8 @@ service:
     traces:
       receivers: [ otlp ]
       processors: [ batch ]
-      exporters: [ otlp/elastic, jaeger ]
+      exporters: [ otlp/elastic, jaeger, logging ]
     metrics:
       receivers: [ otlp ]
       processors: [ batch ]
-      exporters: [ otlp/elastic, prometheus ]
+      exporters: [ otlp/elastic, prometheus, logging ]
