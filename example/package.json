@@ -12,9 +12,13 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node --require ./tracing.js app.js",
-    "traffic": "while true; do curl -s localhost:8080/nice -o /dev/null && curl -s localhost:8080/hello -o /dev/null && sleep 0.5; done"
+    "traffic": "while true; do curl -fsS -o /dev/null localhost:8080/nice && curl -fsS -o /dev/null localhost:8080/hello && sleep 0.5; done"
   },
-  "keywords": ["opentelemetry", "instrumentation", "otel"],
+  "keywords": [
+    "opentelemetry",
+    "instrumentation",
+    "otel"
+  ],
   "author": "@bs-data-team",
   "license": "MIT",
   "description": "Example application to test instrumentation stack."
